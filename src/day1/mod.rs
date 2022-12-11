@@ -4,9 +4,9 @@ use std::fs;
 fn get_sum_cals(contents: String) -> Vec<i32>{
     let cals: Vec<Vec<i32>> = contents.split("\n\n")
                                         .map(|s| s.split("\n")
-                                             .map(|ss| ss.to_string())
-                                             .map(|sss| sss.parse::<i32>().unwrap())
-                                             .collect()
+                                                  .map(|ss| ss.to_string())
+                                                  .map(|sss| sss.parse::<i32>().unwrap())
+                                                  .collect()
                                         ).collect();
                                          
     return cals.iter()

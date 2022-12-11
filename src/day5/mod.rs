@@ -37,15 +37,12 @@ fn parse_input(fname: &str) -> (HashMap<usize, Vec<char>>, Vec<Move>){
                                  )
                             .collect::<Vec<_>>();
 
-    //println!("{:?}", crate_map);
-    //println!("{:?}", parsed_moves);
     (crate_map, parsed_moves)
 }
 
 fn get_tops(crate_map: HashMap<usize, Vec<char>>) -> String{
     (0..crate_map.keys().len())
-                      .map(|x| crate_map.get(&(x+1)).unwrap().last().unwrap())
-                      .copied()
+                      .map(|x| crate_map.get(&(x+1)).and_then(|x| x.last()).unwrap())
                       .collect()
 }
 
