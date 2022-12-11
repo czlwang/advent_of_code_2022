@@ -29,7 +29,14 @@ fn parse_input(fname: &str) -> Vec<Pair>{
 fn solve1(pairs: Vec<Pair>) -> usize{
     pairs.iter()
          .filter(|(p1,p2)| 
-              ((p1.0 >= p2.0 && p1.1 <= p2.1) || (p2.0 >= p1.0 && p2.1 <= p1.1)))
+                 ((p1.0 >= p2.0 && p1.1 <= p2.1) || (p2.0 >= p1.0 && p2.1 <= p1.1)))
+         .count()
+}
+
+fn solve2(pairs: Vec<Pair>) -> usize{
+    pairs.iter()
+         .filter(|(p1,p2)| 
+                 (p2.0 <= p1.1 && p2.1 >= p1.0))
          .count()
 }
 
@@ -37,4 +44,6 @@ pub fn solve(){
     println!("Hello");
     assert_eq!(2, solve1(parse_input("test1.txt")));
     println!("{:?}", solve1(parse_input("input1.txt")));
+    assert_eq!(4, solve2(parse_input("test1.txt")));
+    println!("{:?}", solve2(parse_input("input1.txt")));
 }
