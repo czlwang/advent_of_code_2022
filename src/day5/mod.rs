@@ -42,7 +42,14 @@ fn parse_input(fname: &str) -> (HashMap<usize, Vec<char>>, Vec<Move>){
     (crate_map, parsed_moves)
 }
 
-pub fn solve1((mut crate_map, moves) : (HashMap<usize, Vec<char>>, Vec<Move>)) -> String{
+fn get_tops(crate_map: HashMap<usize, Vec<char>>) -> String{
+    (0..crate_map.keys().len())
+                      .map(|x| crate_map.get(&(x+1)).unwrap().last().unwrap())
+                      .copied()
+                      .collect()
+}
+
+fn solve1((mut crate_map, moves) : (HashMap<usize, Vec<char>>, Vec<Move>)) -> String{
     for (n,from,to) in moves {
         for _ in 0..n{
             let from_col = crate_map.get_mut(&from).unwrap();
@@ -52,13 +59,24 @@ pub fn solve1((mut crate_map, moves) : (HashMap<usize, Vec<char>>, Vec<Move>)) -
         }
     }
 
-    (0..crate_map.keys().len())
-                      .map(|x| crate_map.get(&(x+1)).unwrap().last().unwrap())
-                      .copied()
-                      .collect()
+    get_tops(crate_map)
+}
+
+fn solve2((mut crate_map, moves) : (HashMap<usize, Vec<char>>, Vec<Move>)) -> String{
+    for (n,from,to) in moves {
+            let from_col = crate_map.get_mut(&from).unwrap();
+            let popped = from_col.drain(from_col.len()-n..)
+                                 .collect::<Vec<_>>();
+            let to_col = crate_map.get_mut(&to).unwrap();
+            to_col.extend(popped);
+    }
+
+    get_tops(crate_map)
 }
 
 pub fn solve(){
     assert_eq!("CMZ", solve1(parse_input("test1.txt")));
     println!("{:?}", solve1(parse_input("input1.txt")));
+    assert_eq!("MCD", solve2(parse_input("test1.txt")));
+    println!("{:?}", solve2(parse_input("input1.txt")));
 }
