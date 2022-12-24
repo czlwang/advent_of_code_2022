@@ -120,7 +120,23 @@ fn solve1(cmds: Vec<Cmd>) -> i32{
              .sum()
 }
 
+fn solve2(cmds: Vec<Cmd>) -> i32{
+    let dir_map = parse_cmds(cmds);
+    let mut dir_sizes = HashMap::new();
+    let total_size = get_dir_size("/", &dir_map, &mut dir_sizes);
+    let freespace = 70000000 - total_size;
+    let needed = 30000000 - freespace;
+
+    assert!(needed > 0);
+    *dir_sizes.values()
+              .filter(|x| **x > needed)
+              .min()
+              .expect("no min")
+}
+
 pub fn solve(){
     assert_eq!(95437, solve1(parse_input("test1.txt")));
     println!("{:?}", solve1(parse_input("input1.txt")));
+    assert_eq!(24933642, solve2(parse_input("test1.txt")));
+    println!("{:?}", solve2(parse_input("input1.txt")));
 }
