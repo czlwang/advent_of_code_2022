@@ -12,8 +12,6 @@ fn parse_input(fname: &str) -> Vec<(String, i32)>{
            .split('\n')
            .map(|x|{
                 let mut tupled = x.split(' ');
-                //println!("{:?}", tupled.next().unwrap());
-                //println!("{:?}", tupled.next().unwrap());
                 (tupled.next().expect("couldn't split 1").to_string(), 
                  tupled.next()
                        .expect("couldn't split 2")
