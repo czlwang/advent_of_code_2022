@@ -78,7 +78,59 @@ fn solve1(grid: Vec<Vec<i32>>) -> i32{
     visible
 }
 
+fn get_score(grid: &Vec<Vec<i32>>, row: usize, col: usize) -> i32{
+    let nrows = grid.len();
+    let ncols = grid[0].len();
+
+    let mut left_score = 0;
+    for i in 0..col{
+        left_score += 1;
+        if grid[row][col-(i+1)] >= grid[row][col]{
+            break;
+        }
+    }
+    let mut right_score = 0;
+    for i in (col+1)..ncols{
+        right_score += 1;
+        if grid[row][i] >= grid[row][col]{
+            break;
+        }
+    }
+    let mut up_score = 0;
+    for i in 0..row{
+        up_score += 1;
+        if grid[row-(i+1)][col] >= grid[row][col]{
+            break;
+        }
+    }
+
+    let mut down_score = 0;
+    for i in (row+1)..nrows{
+        down_score += 1;
+        if grid[i][col] >= grid[row][col]{
+            break;
+        }
+    }
+
+    up_score*down_score*left_score*right_score
+}
+
+fn solve2(grid: Vec<Vec<i32>>) -> i32{
+    let nrows = grid.len();
+    let ncols = grid[0].len();
+
+    let mut score = 0;
+    for row in 0..nrows{
+        for col in 0..ncols{
+            score = std::cmp::max(get_score(&grid, row, col), score);
+        }
+    }
+    score
+}
+
 pub fn solve(){
     assert_eq!(21,solve1(parse_input("test1.txt")));
     println!("{:?}", solve1(parse_input("input1.txt")));
+    assert_eq!(8,solve2(parse_input("test1.txt")));
+    println!("{:?}", solve2(parse_input("input1.txt")));
 }
