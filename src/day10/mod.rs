@@ -54,7 +54,32 @@ fn solve1(ops: Vec<Op>) -> i32{
     sum
 }
 
+fn pretty_print(pixels: Vec<i32>){
+    let mut screen = [['.'; 40]; 6];
+    for pos in pixels{
+        let x = (pos % 40) as usize;
+        let y = (pos / 40) as usize;
+        screen[y][x] = '#';
+    }
+    let strings = screen.map(|row| row.iter().collect::<String>());
+    let string = strings.join("\n");
+    print!("{}",string);
+}
+
+fn solve2(ops: Vec<Op>){
+    let history = execute(ops);
+    let pixels = (0..240).filter(|pos| {
+                                    let xreg = history[(*pos as usize)];
+                                    (xreg - (pos%40)).abs() <= 1
+                                 })
+                         .collect::<Vec<_>>();
+    pretty_print(pixels);
+}
+
 pub fn solve(){
     assert_eq!(13140, solve1(parse_input("test1.txt")));
     println!("{:?}", solve1(parse_input("input1.txt")));
+    solve2(parse_input("test1.txt"));
+    print!("\n\n");
+    solve2(parse_input("input1.txt"));
 }
