@@ -36,7 +36,7 @@ fn execute(ops: Vec<Op>) -> Vec<i32>{
             Op::Noop => {for _ in 0..1 {history.push(xreg);}},
             Op::Addx(x) => {for _ in 0..1 {
                                 history.push(xreg);
-                            }
+                           }
                             xreg += x;
                             history.push(xreg);
                            },
