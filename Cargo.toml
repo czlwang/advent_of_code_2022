@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 ferris-says = "0.2"
+itertools = "0.10.5"
