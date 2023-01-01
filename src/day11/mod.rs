@@ -180,7 +180,7 @@ fn solve1(monkeys: Vec<Monkey>) -> u128{
     run_rounds(monkeys, 20, 3)
 }
 
-fn solve2(mut monkeys: Vec<Monkey>) -> u128{
+fn solve2(monkeys: Vec<Monkey>) -> u128{
     run_rounds(monkeys, 10000, 1)
 }
 
